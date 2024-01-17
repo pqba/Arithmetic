@@ -25,6 +25,13 @@ body {
     text-align: center;
 }
 
+ .left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
 #main img {
     max-width: 100%;
     border-style: solid;
@@ -43,4 +50,11 @@ body {
 }
 #main p {
     margin-top: 10px;
+}
+
+#page2 #enterKey {
+    font-size: 8px;
+    font-style: italic;
+    font-weight: lighter;
+    text-align: center;
 }
