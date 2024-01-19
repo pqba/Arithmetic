@@ -1,42 +1,47 @@
 <!DOCTYPE html>
+
 <head>
     <title>Arithmetic Page</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src = "arithmetic.js"></script>
+    <script src="arithmetic.js"></script>
 </head>
-<body id = "page2">
-    <div id = "title">
-    <h1> Math Practice </h1>
+
+<body id="page2">
+    <div id="title">
+        <h1> Math Practice </h1>
     </div>
     <div>
-             <!-- Build toggles / sliders for number range, functions, and timer/ score  -->
+        <!-- Build toggles / sliders for number range, functions, and timer/ score  -->
         <p> Settings </p>
-        <form id = "settings">
-            <input type = "text" id ="numRange"> 
-             </form>
+        <form id="settings">
+            <input type="text" id="numRange">
+        </form>
     </div>
-    <div id = "header"> 
-    
-    <h3> Solve the Equation Below </h3>
+    <div id="header">
+        <h3> Solve the Equation Below </h3>
         <!--Time should be below the h3 on left, score should be on the right and chang / interpolate colors -->
-    <p id = "time"> Time:  </p>
-    <p id = "score"> Score: A/B </p>
-</div>
-    <div id = "equation">
-    <p class = "center"> X [op] Y : </p>
-    <form id = "myForm" class = "center"> 
-        <input type = "text" id = "userResponse"><br> 
+        <p id="time"> Time: </p>
+        <p id="score"> Score: A/B </p>
+    </div>
+    <div id="equation">
+        <p class="center"> X [op] Y : </p>
+    </div>
+    <div id = "inputForm">
+    <form id="myForm" class="center">
+        <input type="text" id="userResponse"><br>
     </form>
-    <p id = "enterKey">      press enter key to submit </p>
+
+    <p id="enterKey"> press enter key to submit </p>
 </div>
 
-<div id = "pastEq" > 
-    <!--Mce this go to another page or pop something up to display all of the past things in the session -->
-    <p > Past Equations: </p>
-</div>
-<div id = "footer"> 
-    <hr>
-    <button id = "button" onclick="goHome()"> Go to Homepage </button>
-</div>
+
+    <div id="pastEq">
+        <!--Mce this go to another page or pop something up to display all of the past things in the session -->
+        <p> Past Equations: </p>
+    </div>
+    <div id="footer">
+        <hr>
+        <button id="button" onclick="goHome()"> Go to Homepage </button>
+    </div>
 
 </body>
