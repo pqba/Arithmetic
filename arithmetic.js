@@ -10,7 +10,7 @@ function goHome() {
 // Setting vars
 // Note: https://stackoverflow.com/questions/4908378/javascript-array-of-functions
 let basicMath = ['+', '-', '/', '*'];
-let extendedMath = ['%', '**'];
+let extendedMath = ['%', '^'];
 let wantExtend = false;
 let maximumRange = 10;
 let numQuestions = 0;
@@ -109,13 +109,16 @@ function showArithmetic() {
 
 //handle input
 function handleInput(userInput, shown) {
-    if (!isNaN(userInput)) {
-        // console.log(`SHOWN ${shown[0]} ${shown[1]}`);
+    if (!isNaN(userInput)) {        
+        const interaction = document.querySelector("#mathResponse #interact");
+        interaction.textContent = '';
         checkArithmetic(userInput, shown[0], shown[1]);
     }
     else {
         // Display on DOM, keep problem up don't change it
         console.error("Invalid input! Not a number.");
+        const interaction = document.querySelector("#mathResponse #interact");
+        interaction.textContent = 'Please, enter a valid number.';
         return false;
 
     }
@@ -216,7 +219,6 @@ function interpolateScoreColor() {
     let G = (255 * score) / 100
     let R = (255 * (100 - score)) / 100
     let B = 0;
-    console.log(`${R} ${G} ${B}`);
     return [R, G, B]; //R, G, B value. Make sure it's initially black.
 }
 
