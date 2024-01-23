@@ -14,6 +14,7 @@ let extendedMath = ['%','**'];
 let wantExtend = false;
 let maximumRange = 10;
 let numQuestions = 0;
+let numCorrect = 0;
 let score = 0;
 let currentNums = {
     xVal : 0,
@@ -29,14 +30,36 @@ const symbolMap = {
     '^': pow
 };
 
-//actual functions
+//Settings functions
+function toggleMath(){
+    const button = document.querySelector('.btn');
+    // Toggle between btn-light and btn-dark classes
+    button.classList.toggle('btn-dark');
+    button.classList.toggle('btn-success');
+    wantExtend = !wantExtend;
+}
+
+function setupSlider(){
+    const rangeSlider = document.getElementById("nRange");
+    const selectedValue = document.getElementById("selectedValue");
+    selectedValue.textContent = `Number Range: ${maximumRange}`;
+    rangeSlider.addEventListener('input',function(){
+        //maximum range = 'input'.value I believe. 
+        maximumRange = this.value;
+        selectedValue.textContent = `Number Range: ${maximumRange}`;
+        console.log("RANGE: " + maximumRange);
+    });
+}
+
+//Game functions
 document.addEventListener('DOMContentLoaded', function () {
     // Wait for the DOM to be fully loaded before adding event listeners for forms
     loadArithmetic();
-
 });
 
 function loadArithmetic(){
+
+    setupSlider();
 
     const settings = document.getElementById("settings")
     const form = document.getElementById('myForm');
@@ -49,18 +72,10 @@ function loadArithmetic(){
         // Get the value from the input field
         let userResponse = document.getElementById('userResponse').value;
         // process input
-        handleInput(userResponse,shown);
+        const validFormat = handleInput(userResponse,shown);
         // Reset form after processing.
-        shown = showArithmetic();
+        if(validFormat){shown = showArithmetic();}
         form.reset();
-
-    });
-
-    settings.addEventListener('submit',function(event){
-        event.preventDefault();
-
-        let userNumRange = document.getElementById('numRange').value;
-        logInput(userNumRange);
 
     });
 }
@@ -71,10 +86,13 @@ function checkArithmetic(userInput = '',operator,genNums){
     if(userInput != ''){
         console.log(`U: ${userInput}  C:${correctResponse}`)
         if(isCorrectAnswer(userInput,correctResponse)){
-            console.log("yay!!")
+            numCorrect++;
+            interact(true);
         }else{
-            console.log("nay...")
+            interact(false);
         }
+        numQuestions++;
+        updateScore();
     }
     else {
         // blank input...
@@ -92,13 +110,17 @@ function showArithmetic(){
 //handle input
 function handleInput(userInput,shown){
     if(!isNaN(userInput)){
-        console.log(`SHOWN ${shown[0]} ${shown[1]}`);
+       // console.log(`SHOWN ${shown[0]} ${shown[1]}`);
         checkArithmetic(userInput,shown[0],shown[1]);
     }
     else {
         // Display on DOM, keep problem up don't change it
         console.error("Invalid input! Not a number.");
+        return false;
+
     }
+    return true;
+    
 }
 
 function isCorrectAnswer(attempt, key, op){
@@ -109,10 +131,31 @@ function isCorrectAnswer(attempt, key, op){
     }
     else {
         //op is divide. Possibly implement epsilon.
-        attempt = parseFloat(attempt);
-        key = parseFloat(key);
-        return attempt === key;
+        attempt = parseFloat(attempt).toFixed(2);
+        key = parseFloat(key).toFixed(2);
+        return attempt - key < 1e-2;
     }
+}
+
+function updateScore(){
+    // Don't divide by zero
+    if(numCorrect != 0){
+        score = (numCorrect / numQuestions) * 100;
+    }
+    //Display score
+    const sc = document.querySelector("#header #score");
+    sc.textContent = `Score: ${score.toFixed(1)}%`
+    //Change Color
+    values = interpolateScoreColor();
+    const scoreParagraph = document.getElementById("score");
+    if(scoreParagraph){
+        scoreParagraph.style.color = `rgb(${values[0]}, ${values[1]}, ${values[2]})`;
+    }
+}
+
+function interact(wasCorrect){
+    const interactionText = document.querySelector("#mathResonse #interact");
+
 }
 //display log user input for testing purposes
 function logInput(userResponse){
@@ -138,6 +181,13 @@ function displayValues(nums, op){
 //return scrambleFunction and findVars for displaying / knowing state
 function generator(){
     const fx = scrambleFunction();
+    let vars = findVars(maximumRange);
+    if(fx == divide){
+        while(vars[1] == 0){
+            vars = findVars(maximumRange);
+        }
+
+    }
     return [fx,findVars(maximumRange)];
 }
 // loop through set of available functions and their symbols. FIX this
@@ -159,12 +209,15 @@ function findVars(maxVal){
     return [x,y];
 }
 
-//as mentioned in mathPractice.html, changes based on current score
+//as mentioned in mathPractice.html, changes based on current score. Score: 0-100
 function interpolateScoreColor(){
-    let totalAttempts;
-    let totalCorrect;
-
-    return [0,0,0]; //R, G, B value. Make sure it's initially black.
+    //do calculuations between red and green
+    // https://stackoverflow.com/questions/340209/generate-colors-between-red-and-green-for-a-power-meter
+    let G = (255 * score) / 100
+    let R = (255 * (100 - score)) / 100 
+    let B = 0;
+    console.log(`${R} ${G} ${B}`);
+    return [R,G,B]; //R, G, B value. Make sure it's initially black.
 }
 
 // Math Functions
