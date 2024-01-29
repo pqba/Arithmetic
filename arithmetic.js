@@ -45,9 +45,8 @@ function setupSlider() {
     selectedValue.textContent = `Number Range: ${maximumRange}`;
     rangeSlider.addEventListener('input', function () {
         //maximum range = 'input'.value I believe. 
-        maximumRange = this.value;
+        maximumRange = parseInt(this.value);
         selectedValue.textContent = `Number Range: ${maximumRange}`;
-        console.log("RANGE: " + maximumRange);
     });
 }
 
@@ -75,24 +74,28 @@ function loadArithmetic() {
         const validFormat = handleInput(userResponse, shown);
         // Reset form after processing.
         if (validFormat) { shown = showArithmetic(); }
+        
         form.reset();
-
     });
 }
+
 // Perform Game Check
 function checkArithmetic(userInput = '', operator, genNums) {
     //map to function [from operator string]
     const correctResponse = symbolMap[operator](genNums[0], genNums[1]);
+    rightAnswer = false;
     if (userInput != '') {
-        console.log(`U: ${userInput}  C:${correctResponse}`)
-        if (isCorrectAnswer(userInput, correctResponse)) {
+        if (isCorrectAnswer(userInput, correctResponse,operator)) {
             numCorrect++;
-            interact(true);
+            rightAnswer = true;
+            interact(rightAnswer);
         } else {
-            interact(false);
+            rightAnswer = false;
+            interact(rightAnswer);
         }
         numQuestions++;
         updateScore();
+        addPastEquation(genNums[0],operator,genNums[1],correctResponse,rightAnswer);
     }
     else {
         // blank input...
@@ -100,9 +103,12 @@ function checkArithmetic(userInput = '', operator, genNums) {
 }
 
 function showArithmetic() {
-    const g = generator();
-    const operator = g[0];
-    const genNums = g[1];
+    let operator, genNums;
+    do {
+        const g = generator();
+        operator = g[0];
+        genNums = g[1];
+    }while(operator == '/' && genNums[1] == '0');
     displayValues(genNums, operator);
     return [operator, genNums];
 }
@@ -120,7 +126,6 @@ function handleInput(userInput, shown) {
         const interaction = document.querySelector("#mathResponse #interact");
         interaction.textContent = 'Please, enter a valid number.';
         return false;
-
     }
     return true;
 
@@ -136,6 +141,7 @@ function isCorrectAnswer(attempt, key, op) {
         //op is divide. Possibly implement epsilon.
         attempt = parseFloat(attempt).toFixed(2);
         key = parseFloat(key).toFixed(2);
+        console.log(`Attempt: ${attempt}, Key: ${key}`);
         return attempt - key < 1e-2;
     }
 }
@@ -156,6 +162,17 @@ function updateScore() {
     }
 }
 
+// Displays past equation on DOM, colored based on correctness.
+function addPastEquation(n1, op, n2, ans,wasCorrect){
+    if(op == '/'){
+        ans = ans.toFixed(2);
+    }
+    const para = document.createElement("p");
+    const pastEq = `${n1} ${op} ${n2} = ${ans}`;
+    para.innerHTML = pastEq;
+    document.getElementById("pastEq").appendChild(para);
+
+}
 function interact(wasCorrect) {
     const interactionText = document.querySelector("#mathResonse #interact");
 
@@ -214,7 +231,6 @@ function findVars(maxVal) {
 
 //as mentioned in mathPractice.html, changes based on current score. Score: 0-100
 function interpolateScoreColor() {
-    //do calculuations between red and green
     // https://stackoverflow.com/questions/340209/generate-colors-between-red-and-green-for-a-power-meter
     let G = (255 * score) / 100
     let R = (255 * (100 - score)) / 100
