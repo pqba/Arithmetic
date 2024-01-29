@@ -21,6 +21,10 @@ body {
     cursor: pointer;
     font-size: 12px;
 }
+
+#header {
+    display: inline-block;
+}
 .center {
     text-align: center;
 }
@@ -31,6 +35,7 @@ body {
 
 .right {
     text-align: right;
+    font-size: 12px;
 }
 #main img {
     max-width: 100%;
