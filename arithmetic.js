@@ -16,10 +16,13 @@ let maximumRange = 10;
 let numQuestions = 0;
 let numCorrect = 0;
 let score = 0;
+let totalSeconds = 0;
 let currentNums = {
     xVal: 0,
     yVal: 0
 };
+
+
 
 const symbolMap = {
     '+': add,
@@ -60,6 +63,8 @@ function loadArithmetic() {
 
     setupSlider();
 
+    initiateTimer();
+
     const settings = document.getElementById("settings")
     const form = document.getElementById('myForm');
 
@@ -96,6 +101,7 @@ function checkArithmetic(userInput = '', operator, genNums) {
         numQuestions++;
         updateScore();
         addPastEquation(genNums[0],operator,genNums[1],correctResponse,rightAnswer);
+        totalSeconds = 0;
     }
     else {
         // blank input...
@@ -229,6 +235,27 @@ function findVars(maxVal) {
     return [x, y];
 }
 
+function initiateTimer(){
+    setInterval(setTime,1000);
+}
+function setTime(){
+    const timeVal = document.getElementById("time");
+    const secStr = pad(totalSeconds % 60);
+    const minStr = pad(parseInt(totalSeconds / 60));
+    timeVal.innerHTML = `Time: ${minStr}:${secStr}`;
+    totalSeconds++;
+}
+
+// pads time value with zero if needed.
+function pad(tValue){
+    var myS = tValue + "";
+    if(myS.length < 2){
+        return "0" + myS;
+    }
+    else {
+        return myS;
+    }
+}
 //as mentioned in mathPractice.html, changes based on current score. Score: 0-100
 function interpolateScoreColor() {
     // https://stackoverflow.com/questions/340209/generate-colors-between-red-and-green-for-a-power-meter
