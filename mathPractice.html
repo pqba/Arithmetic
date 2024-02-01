@@ -9,25 +9,23 @@
 </head>
 
 <body id="page2">
-    <div id="title">
-        <h1> Math Practice </h1>
-    </div>
-    <div>
-        <!-- Build toggles / sliders for number range, functions, and timer/ score  -->
-        <p> Settings </p>
-        <label for="nRange"> Maximum Number Range:</label>
-        <input type="range" class="custom-range" id="nRange" min="1" max="100" step="1" value="10">
-        <p id="selectedValue">Number Range: 10</p>
-        <button type="button" class="btn btn-dark" onclick="toggleMath()"> Allow Advanced Math </button>
-    </div>
     <div id="header">
-        <h3> Solve the Equation Below </h3>
-        <!--Time should be below the h3 on left, score should be on the right and chang / interpolate colors -->
+        <h1 class="customFont"> \ Math Practice \ </h1>
+    </div>
+    <div class="customFont smallFont">
+        <!-- Build toggles / sliders for number range, functions, and timer/ score  -->
+        <h5 class="highlight"> <b>Settings</b> </h5>
+        <label for="nRange"> Maximum Number Range</label>
+        <input type="range" class="custom-range" id="nRange" min="1" max="50" step="1" value="10">
+        <p id="selectedValue"><b>Current Range:</b> 10</p>
+        <button type="button" class="btn btn-secondary smallFont" onclick="toggleMath()"> Advanced Math </button>
+    </div>
+    <div class="stats">
         <p id="time"> Time: 00:00 </p>
-        <p id="score"> Score: 0.0% </p>
+        <p id="score"> Score: N/A </p>
     </div>
     <div id="equation">
-        <p class="center"> X [op] Y : </p>
+        <h3> X [op] Y</h3>
     </div>
     <div id="inputForm">
         <form id="myForm" class="center">
@@ -36,20 +34,26 @@
         <div id="mathResponse">
             <p id="interact"></p>
         </div>
-
-        <p id="enterKey"> press enter key to submit </p>
+        <p class="enterKey"> press enter key to submit </p>
     </div>
 
-
-    <div id="pastEq">
-        <!--Make this go to another page or pop something up to display all of the past things in the session -->
-        <h4> Past Equations: </h4>
+    <div id="pastContainer" >
+        <button type="button" class = "btn btn-info" data-toggle="collapse" data-target="#pastEq" aria-expanded="false" aria-controls="pastEq">View Past Equations</button>
+        <div id="pastEq" class=  "collapse">
+            <!--Make this go to another page or pop something up to display all of the past things in the session -->
+        </div>
     </div>
-    <div id="footer">
+    <div id="footer" class="text-center mt-3">
         <hr>
-        <button id="button" onclick="goHome()"> Go to Homepage </button>
+        <button id="button" onclick="goHome()" class="btn btn-dark"> Go to Homepage </button>
     </div>
-
+    <div class="card">
+        <div class="card-footer">
+            <p> made by pqba </p>
+            <a href="https://github.com/pqba/Arithmetic" target="_blank">View Source (Github)</a>
+        </div>
+    </div>
+    <!--- Bootstrap scripts-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

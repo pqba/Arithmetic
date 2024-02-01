@@ -9,8 +9,8 @@ function goHome() {
 }
 // Setting vars
 // Note: https://stackoverflow.com/questions/4908378/javascript-array-of-functions
-let basicMath = ['+', '-', '/', '*'];
-let extendedMath = ['%', '^'];
+const basicMath = ['+', '-', '/', '*'];
+const extendedMath = ['%', '^'];
 let wantExtend = false;
 let maximumRange = 10;
 let numQuestions = 0;
@@ -21,8 +21,6 @@ let currentNums = {
     xVal: 0,
     yVal: 0
 };
-
-
 
 const symbolMap = {
     '+': add,
@@ -37,15 +35,16 @@ const symbolMap = {
 function toggleMath() {
     const button = document.querySelector('.btn');
     // Toggle between btn-light and btn-dark classes
-    button.classList.toggle('btn-dark');
+    button.classList.toggle('btn-secondary');
     button.classList.toggle('btn-success');
     wantExtend = !wantExtend;
+    console.log(`WANT EXTEND: ${wantExtend}`)
 }
 
 function setupSlider() {
     const rangeSlider = document.getElementById("nRange");
     const selectedValue = document.getElementById("selectedValue");
-    selectedValue.textContent = `Number Range: ${maximumRange}`;
+    selectedValue.textContent = `Current Range: ${maximumRange}`;
     rangeSlider.addEventListener('input', function () {
         //maximum range = 'input'.value I believe. 
         maximumRange = parseInt(this.value);
@@ -79,7 +78,7 @@ function loadArithmetic() {
         const validFormat = handleInput(userResponse, shown);
         // Reset form after processing.
         if (validFormat) { shown = showArithmetic(); }
-        
+
         form.reset();
     });
 }
@@ -90,7 +89,7 @@ function checkArithmetic(userInput = '', operator, genNums) {
     const correctResponse = symbolMap[operator](genNums[0], genNums[1]);
     rightAnswer = false;
     if (userInput != '') {
-        if (isCorrectAnswer(userInput, correctResponse,operator)) {
+        if (isCorrectAnswer(userInput, correctResponse, operator)) {
             numCorrect++;
             rightAnswer = true;
             interact(rightAnswer);
@@ -100,7 +99,7 @@ function checkArithmetic(userInput = '', operator, genNums) {
         }
         numQuestions++;
         updateScore();
-        addPastEquation(genNums[0],operator,genNums[1],correctResponse,rightAnswer);
+        addPastEquation(genNums[0], operator, genNums[1], correctResponse, rightAnswer);
         totalSeconds = 0;
     }
     else {
@@ -114,14 +113,14 @@ function showArithmetic() {
         const g = generator();
         operator = g[0];
         genNums = g[1];
-    }while(operator == '/' && genNums[1] == '0');
+    } while (operator == '/' && genNums[1] == '0');
     displayValues(genNums, operator);
     return [operator, genNums];
 }
 
 //handle input
 function handleInput(userInput, shown) {
-    if (!isNaN(userInput)) {        
+    if (!isNaN(userInput)) {
         const interaction = document.querySelector("#mathResponse #interact");
         interaction.textContent = '';
         checkArithmetic(userInput, shown[0], shown[1]);
@@ -147,7 +146,6 @@ function isCorrectAnswer(attempt, key, op) {
         //op is divide. Possibly implement epsilon.
         attempt = parseFloat(attempt).toFixed(2);
         key = parseFloat(key).toFixed(2);
-        console.log(`Attempt: ${attempt}, Key: ${key}`);
         return attempt - key < 1e-2;
     }
 }
@@ -158,7 +156,7 @@ function updateScore() {
         score = (numCorrect / numQuestions) * 100;
     }
     //Display score
-    const sc = document.querySelector("#header #score");
+    const sc = document.querySelector("#score");
     sc.textContent = `Score: ${score.toFixed(1)}%`
     //Change Color
     values = interpolateScoreColor();
@@ -169,14 +167,15 @@ function updateScore() {
 }
 
 // Displays past equation on DOM, colored based on correctness.
-function addPastEquation(n1, op, n2, ans,wasCorrect){
-    if(op == '/'){
+function addPastEquation(n1, op, n2, ans, wasCorrect) {
+    if (op == '/') {
         ans = ans.toFixed(2);
     }
     const para = document.createElement("p");
-    const pastEq = `${n1} ${op} ${n2} = ${ans}`;
+    let pastEq = `${n1} ${op} ${n2} = ${ans} | ${calcTime()}`;
+    wasCorrect ? pastEq = "✓ | " + pastEq :  pastEq = "✕ | " + pastEq;
     para.innerHTML = pastEq;
-    document.getElementById("pastEq").appendChild(para);
+    document.getElementById("pastEq").prepend(para);
 
 }
 function interact(wasCorrect) {
@@ -192,7 +191,7 @@ function logInput(userResponse) {
 function displayValues(nums, op) {
     const x = nums[0];
     const y = nums[1];
-    const eq = document.querySelector("#equation .center");
+    const eq = document.querySelector("#page2 #equation");
     if (eq) {
         currentNums = {
             xVal: x,
@@ -220,9 +219,7 @@ function generator() {
 function scrambleFunction() {
     let availableFunc = basicMath;
     if (wantExtend) {
-        for (let i = 0; i < extendedMath.length; i++) {
-            availableFunc.push(extendedMath[i]);
-        }
+        availableFunc = availableFunc.concat(extendedMath)
     }
     const idx = Math.floor(Math.random() * availableFunc.length);
     return [availableFunc[idx]];
@@ -235,21 +232,24 @@ function findVars(maxVal) {
     return [x, y];
 }
 
-function initiateTimer(){
-    setInterval(setTime,1000);
+function initiateTimer() {
+    setInterval(setTime, 1000);
 }
-function setTime(){
-    const timeVal = document.getElementById("time");
+function calcTime (){
     const secStr = pad(totalSeconds % 60);
     const minStr = pad(parseInt(totalSeconds / 60));
-    timeVal.innerHTML = `Time: ${minStr}:${secStr}`;
+    return `Time: ${minStr}:${secStr}`;
+}
+function setTime() {
+    const timeVal = document.getElementById("time");
+    timeVal.innerHTML = calcTime();
     totalSeconds++;
 }
 
 // pads time value with zero if needed.
-function pad(tValue){
+function pad(tValue) {
     var myS = tValue + "";
-    if(myS.length < 2){
+    if (myS.length < 2) {
         return "0" + myS;
     }
     else {
