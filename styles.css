@@ -1,65 +1,101 @@
+@font-face {
+    font-family: "Raleway";
+    src: url("raleway.light.ttf") format("truetype");
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#main .container {
+    padding: 2em;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
+    flex-direction: column;
+    justify-content: center;
 }
 
-#button {
-    background-color: #E0E0E0;
-    border: none;
-    color: black;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    padding: 10px 10px;
-    cursor: pointer;
-    font-size: 12px;
+main {
+    flex: 1;
 }
 
-#header {
-    display: inline-block;
-}
-.center {
-    text-align: center;
-}
-
- .left {
+.customFont {
+    font-family: "Raleway", sans-serif;
     text-align: left;
 }
 
-.right {
-    text-align: right;
-    font-size: 12px;
-}
-#main img {
-    max-width: 100%;
-    border-style: solid;
-    border-color: black;
-    height: 500px;
-    border-radius: 30px;
-}
-
-#main .content {
-    flex: 1;
-    padding-left: 20px;
-}
-
-#main h1 {
-    font-size: 30px;
-}
-#main p {
-    margin-top: 10px;
-}
-
-#page2 #enterKey {
-    font-size: 8px;
-    font-style: italic;
-    font-weight: lighter;
+#header h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
     text-align: center;
 }
+button {
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+}
+#home #header h1 {
+    background-image: url("soft_bg.jpg");
+}
+#page2 #header h1 {
+    background-image: url("alt_soft_bg.jpg");
+}
+
+#header h3 {
+    font-size: 40px;
+    color:rgb(58, 55, 55);
+    text-align: center;
+}
+
+#main footer {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 2em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+p.hightlight {
+    color:yellow;
+}
+
+.btn-dark {
+    margin-bottom: 1em;
+}
+.card-footer {
+    align-items: left;
+}
+
+.smallFont {
+    font-size: .75em;
+}
+
+#page2 #equation {
+    font-size:2.5em;
+    color:#211f1f;
+    text-align: center;
+}
+#page2 #inputForm {
+    text-align:center;
+    margin-top:.5em;
+}
+#page2 .stats {
+    margin-top: 1em;
+    display:flex;
+    font-size: 1.5em;
+    justify-content: space-between;
+}
+
+.enterKey {
+    font-style:italic;
+    font-size: .75em;
+}
+
+#pastContainer h4 {
+    font-size: 1.2em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+#pastContainer #pastEq {
+    margin-top: .25em;
+}
+
