@@ -8,31 +8,26 @@
     <script src="homepage.js"></script>
 </head>
 
-<body id="main">
-    <div id="header">
-        <h1> Arithmetic </h1>
-        <h2 class="right" id="attribution"> made by pqba </h2>
-        <!-- Link Github and provide little guy -->
-    </div>
-    <div class="container">
-        <div class="whiteboard"><img src="math_whiteboard.JPG"></div>
-        <div class="content">
-            <p> Quick Arithmetic is important.</p>
-            <p> I created this site so you can practice, through any range that you may want, basic arithmetic and other important skills to drill. </p>
-            <p> Feel free to use this for mental math, <em>or</em> work through the problems on paper. </p>
+<body id="home">
+    <main>
+        <div id="header">
+            <h1 class="customFont"> / Arithmetic / </h1>
         </div>
-    </div>
-    <div class="moreinfo"><button id="button" onclick="practiceMath()"> Begin Practicing </button>
         <br>
-        <h3 > You can practice: </h3>
-        <ul>
-            <li> Addition </li>
-            <li> Subtraction </li>
-            <li> Division </li>
-            <li> Multiplication </li>
-            <li> Mod </li>
-            <li> Power </li>
-        </ul>
+        <div class="thing">
+            <div class="content customFont">
+                <p class="highlight"> Quick Arithmetic is <b>important</b>.</p><br>
+                <p> Easily practice basic mental math, see your score over time, and adjust the difficulty.</p>
+            </div>
+        </div>
+        <br>
+        <div class="text-center mt-3"><button class="btn btn-dark center" onclick="practiceMath()"> Begin </button></div>
+    </main>
+    <div class="card">
+        <div class="card-footer">
+            <p> made by pqba </p>
+            <a href="https://github.com/pqba/Arithmetic" target="_blank">View Source (Github)</a>
+        </div>
     </div>
     <!-- Bootstrap scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
