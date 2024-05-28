@@ -1,0 +1,120 @@
+@font-face {
+    font-family: "Raleway";
+    src: url("raleway.light.ttf") format("truetype");
+}
+
+body {
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main {
+    flex: 1;
+}
+
+.customFont {
+    font-family: "Raleway", sans-serif;
+    text-align: left;
+}
+
+#header h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}
+button {
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+}
+#home #header h1 {
+    background-image: url("soft_bg.jpg");
+}
+#page2 #header h1 {
+    background-image: url("alt_soft_bg.jpg");
+}
+.ptolemy-image {
+    text-align: center;
+    margin-right: 10px;
+}
+
+#header h3 {
+    font-size: 40px;
+    color:rgb(58, 55, 55);
+    text-align: center;
+}
+
+#main footer {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 2em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+p.hightlight {
+    color:yellow;
+}
+
+.btn-dark {
+    margin-bottom: 1em;
+}
+.card-footer {
+    align-items: left;
+}
+
+.smallFont {
+    font-size: .75em;
+}
+
+#page2 #equation {
+    font-size:2.5em;
+    color:#211f1f;
+    text-align: center;
+}
+#page2 #inputForm {
+    text-align:center;
+    margin-top:.5em;
+}
+#page2 .stats {
+    margin-top: 1em;
+    display:flex;
+    font-size: 1.5em;
+    justify-content: space-between;
+}
+
+.enterKey {
+    font-style:italic;
+    font-size: .75em;
+}
+
+#pastContainer h4 {
+    font-size: 1.2em;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+#pastContainer #pastEq {
+    margin-top: .25em;
+}
+
+
+/*Dark Mode: https://stackoverflow.com/questions/50840168/how-to-detect-if-the-os-is-in-dark-mode-in-browsers*/
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: rgb(18, 16, 16);
+        color: white;
+    }
+    .card-footer {
+        background-color: rgb(47, 43, 43);
+        color:white;
+    }
+    #page2 #equation {
+        color: antiquewhite;
+    }
+}
