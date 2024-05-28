@@ -1,11 +1,11 @@
 
 //Nav functions
 function practiceMath() {
-    window.location.href = 'mathPractice.html';
+    window.location.href = 'practice.html';
 }
 
 function goHome() {
-    window.location.href = 'startingPage.html';
+    window.location.href = 'home.html';
 }
 // Setting vars
 // Note: https://stackoverflow.com/questions/4908378/javascript-array-of-functions
@@ -206,14 +206,8 @@ function displayValues(nums, op) {
 //return scrambleFunction and findVars for displaying / knowing state
 function generator() {
     const fx = scrambleFunction();
-    let vars = findVars(maximumRange);
-    if (fx == divide) {
-        while (vars[1] == 0) {
-            vars = findVars(maximumRange);
-        }
-
-    }
-    return [fx, findVars(maximumRange)];
+    let vars = findVars(maximumRange,fx);
+    return [fx, vars];
 }
 // loop through set of available functions and their symbols. FIX this
 function scrambleFunction() {
@@ -222,13 +216,23 @@ function scrambleFunction() {
         availableFunc = availableFunc.concat(extendedMath)
     }
     const idx = Math.floor(Math.random() * availableFunc.length);
-    return [availableFunc[idx]];
+    return availableFunc[idx];
 }
-
-function findVars(maxVal) {
+// Find valid random variables for given range and operation
+function findVars(maxVal,operation) {
     //find 2 random numbers in range.
-    const x = Math.floor((Math.random() * (maxVal + 1)));
-    const y = Math.floor((Math.random() * (maxVal + 1)));
+    let x = Math.floor((Math.random() * (maxVal + 1)));
+    let y = Math.floor((Math.random() * (maxVal + 1)));
+    if(operation == '/' ) {
+        while(y === 0){
+            y = Math.floor(Math.random() * (maxVal + 1)); // avoid div by zero
+        }
+        if(!wantExtend){ // Ensure dividend (x) is a multiple of the divisor (y) on easy mode
+            const maxMult = Math.floor(maxVal/y);
+            const mult = Math.floor(Math.random() * (maxMult+1));
+            x = y * mult;
+        }
+    }
     return [x, y];
 }
 
