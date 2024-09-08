@@ -3,13 +3,22 @@
     src: url("raleway.light.ttf") format("truetype");
 }
 
+html {
+        scrollbar-color: var(--blue) var(--light);
+}
 body {
     padding: 2em;
+    padding-top:0;
+    padding-bottom:0;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
+footer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 main {
     flex: 1;
 }
@@ -46,7 +55,10 @@ button {
     color:rgb(58, 55, 55);
     text-align: center;
 }
-
+.describe {
+   padding:1em;
+   padding-top:.5em;
+}
 #main footer {
     background-color: #333;
     color: #fff;
@@ -56,7 +68,9 @@ button {
     bottom: 0;
     width: 100%;
 }
-
+p {
+    margin-bottom: 0;
+}
 p.hightlight {
     color:yellow;
 }
@@ -64,14 +78,19 @@ p.hightlight {
 .btn-dark {
     margin-bottom: 1em;
 }
-.card-footer {
-    align-items: left;
-}
+
 
 .smallFont {
     font-size: .75em;
 }
 
+#selectedValue {
+    font-style:italic;
+}
+
+#page2 .practice {
+    padding:1em;
+}
 #page2 #equation {
     font-size:2.5em;
     color:#211f1f;
@@ -109,6 +128,9 @@ p.hightlight {
     body {
         background-color: rgb(18, 16, 16);
         color: white;
+    }
+    html {
+        scrollbar-color:var(--blue)  rgb(18, 16, 16);
     }
     .card-footer {
         background-color: rgb(47, 43, 43);
